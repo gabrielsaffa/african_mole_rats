@@ -2,7 +2,7 @@
 ### African mole-rats ###
 
 
-setwd ("C:/R_folder/african mole rats")
+setwd ("")
 
 library (phytools)
 library (rethinking)
@@ -175,9 +175,8 @@ log_IFA <- log (data$IFA)
 log_BM <- log (data$BM)
 
 # compute species means and standard errors for each variable
-# define standard error function
 
-se_fun <- function (x) {sd(x)/sqrt(length(x))}
+se_fun <- function (x) {sd(x)/sqrt(length(x))} # define a function to compute standard error 
 
 IFA_mu <- tapply (log_IFA, data$species, mean)
 IFA_se <- tapply (log_IFA, data$species, se_fun)
