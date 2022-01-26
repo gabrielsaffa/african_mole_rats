@@ -7,7 +7,7 @@ setwd ("")
 library (phytools)
 library (rethinking)
 
-# setting recommended by Stan
+# settings recommended by Stan
 
 options(mc.cores = parallel::detectCores())
 rstan_options(auto_write = TRUE)
@@ -76,7 +76,7 @@ m_IFA_pglmm <- ulam(
       sigma_ab ~ exponential(1),
       Rho ~ lkj_corr(2),
       
-      # priors for the covariance functions
+      # priors for GP covariance functions
       c(etasq_a,etasq_b) ~ exponential(1),
       c(rhosq_a,rhosq_b) ~ exponential(1)
       
@@ -115,7 +115,7 @@ Dmat <- cophenetic (tree_trimmed) # compute distance matrix
 Dmat <- Dmat[spp_i,spp_i]/max(Dmat) # normalize the distances to scale from 0 to 1 and include it to the data list
 N <- length(spp_i)
 
-# create a data list
+# create a new data list
 
 d <- list(
    log_RDT=log_RDT,
@@ -153,7 +153,7 @@ m_RDT_pglmm <- ulam(
       sigma_ab ~ exponential(1),
       Rho ~ lkj_corr(2),
       
-      # priors for the covariance functions
+      # priors for GP covariance functions
       c(etasq_a,etasq_b) ~ exponential(1),
       c(rhosq_a,rhosq_b) ~ exponential(1)
       
@@ -196,7 +196,7 @@ m_TJI_pglmm <- ulam(
       sigma_ab ~ exponential(1),
       Rho ~ lkj_corr(2),
       
-      # priors for the covariance functions
+      # priors for GP covariance functions
       c(etasq_a,etasq_b) ~ exponential(1),
       c(rhosq_a,rhosq_b) ~ exponential(1)
       
@@ -419,14 +419,14 @@ legend (9.5,-1.15, lwd=2, col=cols, pch=pts, legend=sp_names, text.font=3, cex=1
 dev.off()
 
 
-############################
-### covariance functions ###
+#######################################
+### plots with covariance functions ###
 
 {
    
 par (mfrow=c(2,2), mai=c(0.7,0.7,0.2,0.05))
    
-# RDT
+# RDT model
 
 plot (NULL, xlim=c(0,1), ylim=c(0,8), xlab="", ylab="", main="", yaxt="n", xaxt="n", cex.axis=1.5, axes=FALSE)
 axis (1, at=seq(from=0, to=1, length.out=5), labels=c("0.0","0.25","0.5","0.75","1.0"), cex.axis=1.5)
@@ -458,7 +458,7 @@ cols <- c("gray45","gray25")
 legend (0.5,7, col=cols, legend=names, lwd=3, lty=1, title.adj=0.6, cex=1.5, box.col=NA, horiz=FALSE, xpd=NA)
 
 
-# TJI
+# TJI model
 
 plot (NULL, xlim=c(0,1), ylim=c(0,8), xlab="", ylab="", main="", yaxt="n", xaxt="n", cex.axis=1.5, axes=FALSE)
 axis (1, at=seq(from=0, to=1, length.out=5), labels=c("0.0","0.25","0.5","0.75","1.0"), cex.axis=1.5)
@@ -490,7 +490,7 @@ cols <- c("gray45","gray25")
 legend (0.5,7, col=cols, legend=names, lwd=3, lty=1, title.adj=0.55, cex=1.5, box.col=NA, horiz=FALSE, xpd=NA)
 
 
-# IFA
+# IFA model
 
 plot (NULL, xlim=c(0,1), ylim=c(0,8), xlab="", ylab="", main="", yaxt="n", xaxt="n", cex.axis=1.5, axes=FALSE)
 axis (1, at=seq(from=0, to=1, length.out=5), labels=c("0.0","0.25","0.5","0.75","1.0"), cex.axis=1.5)
