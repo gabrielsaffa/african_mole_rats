@@ -2,7 +2,7 @@
 ### African mole-rats ###
 
 
-setwd ("C:/R_folder/african mole rats")
+setwd ("")
 
 library (phytools)
 library (rethinking)
